@@ -4,6 +4,7 @@ import io.desofme.springsecurity.entity.Role;
 import io.desofme.springsecurity.entity.User;
 import io.desofme.springsecurity.repositroy.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +29,13 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<User> list(){
         return userRepository.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public User getById(@PathVariable Long id){
         return userRepository.findById(id)
                 .orElse(null);
