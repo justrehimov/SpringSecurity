@@ -24,6 +24,7 @@ public class AuthService {
             User user = (User) authentication.getPrincipal();
             String accessToken = jwtService.getToken(user);
             LoginResponse loginResponse = new LoginResponse(accessToken, user.getId());
+
             return loginResponse;
 
         }catch (Exception ex){
